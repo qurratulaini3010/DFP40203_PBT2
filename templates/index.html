@@ -1,0 +1,81 @@
+<!--ALEESA-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product List</title>
+    <style>
+        *{
+            font-family: verdana;
+            margin-left: 2rem;
+        }
+
+        input{
+            padding: .2rem;
+            border: .1rem solid black;
+            border-radius: .2rem;
+        }
+
+        input[type=submit], input[type=delete]{
+            padding: .2rem;
+            border-radius: .2rem;
+            border: .1rem solid black;
+            background-color: gray;
+        }
+
+        table, tr, td{
+            border: .1rem solid black;
+            border-collapse: collapse;
+            padding: 2rem;
+        }
+
+        .form{
+            background-color: slategray;
+            border-radius: 1rem;
+            border: none;
+            width: 18rem;
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Product List</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product[1] }}</td>
+                <td>{{ product[2] }}</td>
+                <td>
+                    <form action="/update_product/{{ product[0] }}" method="POST">
+                        <label>Name:</label><br>
+                        <input type="text" name="name" value="{{ product[1] }}" required><br><br>
+                        <label>Descrption:</label><br>
+                        <input type="text" name="description" value="{{ product[2] }}" required>
+                        <input type="submit" value="Update">
+                    </form><br>
+                    <form action="/delete_product/{{ product[0] }}" method="POST">
+                        <input type="submit" value="Delete">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <h1>Add Product</h1>
+    <form action="/add_product" method="POST" class="form">
+        <label>Name:</label><br>
+        <input type="text" name="name" placeholder="Product Name" required><br><br>
+        <label>Descrption:</label><br>
+        <input type="text" name="description" placeholder="Product Description" required><br><br>
+        <input type="submit" value="Add Product">
+    </form>
+</body>
+</html>
